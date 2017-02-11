@@ -106,7 +106,7 @@ public class TestMethod {
                 String uniqueMethodId = Utils.uniqueMethodId(i, paramSet, name());
 
                 parametrised.addChild(
-                        Description.createTestDescription(testClass().getName(), name, uniqueMethodId)
+                        Description.createTestDescription(testClass(), name)
                 );
             }
             return parametrised;

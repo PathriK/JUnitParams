@@ -55,7 +55,7 @@ public class ParametersReader {
 
     private void noStrategyFound() {
         throw new IllegalStateException(format("Method %s#%s is annotated with @Parameters but there were no parameters provided.",
-                frameworkMethod.getDeclaringClass().getName(), frameworkMethod.getName()));
+                frameworkMethod.getMethod().getDeclaringClass().getName(), frameworkMethod.getName()));
     }
 
     private void illegalState() {

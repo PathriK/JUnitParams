@@ -402,7 +402,7 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
 
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
-        super.validateFields(errors);
+        //super.validateFields(errors);
         for (Throwable throwable : errors)
             throwable.printStackTrace();
     }
