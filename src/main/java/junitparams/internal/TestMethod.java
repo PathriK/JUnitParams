@@ -34,7 +34,7 @@ public class TestMethod {
         frameworkMethodAnnotations = new FrameworkMethodAnnotations(method);
         parametersReader = new ParametersReader(testClass(), frameworkMethod);
 
-        namingStrategy = new MacroSubstitutionNamingStrategy(this);
+        namingStrategy = new MacroSubstitutionNamingStrategy(frameworkMethod);
     }
 
     public String name() {
@@ -103,7 +103,7 @@ public class TestMethod {
             for (int i = 0; i < params.length; i++) {
                 Object paramSet = params[i];
                 String name = namingStrategy.getTestCaseName(i, paramSet);
-                String uniqueMethodId = Utils.uniqueMethodId(i, paramSet, name());
+//                String uniqueMethodId = Utils.uniqueMethodId(i, paramSet, name());
 
                 parametrised.addChild(
                         Description.createTestDescription(testClass(), name)

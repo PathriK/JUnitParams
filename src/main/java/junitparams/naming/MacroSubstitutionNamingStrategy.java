@@ -1,12 +1,13 @@
 package junitparams.naming;
 
-import junitparams.internal.TestMethod;
-import junitparams.internal.Utils;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.regex.Pattern;
+
+import org.junit.runners.model.FrameworkMethod;
+
+import junitparams.internal.Utils;
 
 public class MacroSubstitutionNamingStrategy implements TestCaseNamingStrategy {
     private static final String MACRO_PATTERN = "\\{[^\\}]{0,50}\\}";
@@ -16,10 +17,10 @@ public class MacroSubstitutionNamingStrategy implements TestCaseNamingStrategy {
     private static final String MACRO_END = "}";
     static final String DEFAULT_TEMPLATE = "{method}({params}) [{index}]";
     private static final String[] DEFAULT_TEMPLATE_PARTS = MACRO_SPLIT_PATTERN.split(DEFAULT_TEMPLATE);
-    private TestMethod method;
+    private FrameworkMethod method;
     private String[] templateParts;
 
-    public MacroSubstitutionNamingStrategy(TestMethod testMethod) {
+    public MacroSubstitutionNamingStrategy(FrameworkMethod testMethod) {
         this.method = testMethod;
         TestCaseName testCaseName = method.getAnnotation(TestCaseName.class);
         String template = getTemplate(testCaseName);
@@ -70,7 +71,7 @@ public class MacroSubstitutionNamingStrategy implements TestCaseNamingStrategy {
         switch (Macro.parse(macroKey)) {
             case INDEX: return String.valueOf(parametersIndex);
             case PARAMS: return Utils.stringify(parameters);
-            case METHOD: return method.name();
+            case METHOD: return method.getName();
             default: return substituteDynamicMacro(macro, macroKey, parameters);
         }
     }

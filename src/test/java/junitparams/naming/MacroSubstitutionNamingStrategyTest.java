@@ -81,7 +81,7 @@ public class MacroSubstitutionNamingStrategyTest {
     private TestCaseNamingStrategy createNamingStrategyForMethod(String name, Class... parameterTypes) throws NoSuchMethodException {
         TestMethod method = getCurrentClassMethod(name, parameterTypes);
 
-        return new MacroSubstitutionNamingStrategy(method);
+        return new MacroSubstitutionNamingStrategy(method.frameworkMethod());
     }
 
     private TestMethod getCurrentClassMethod(String name, Class... parameterTypes) throws NoSuchMethodException {

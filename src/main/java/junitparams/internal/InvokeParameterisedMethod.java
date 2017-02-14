@@ -14,6 +14,8 @@ import junitparams.converters.ConversionFailedException;
 import junitparams.converters.ConvertParam;
 import junitparams.converters.ParamAnnotation;
 import junitparams.converters.ParamConverter;
+import junitparams.naming.MacroSubstitutionNamingStrategy;
+import junitparams.naming.TestCaseNamingStrategy;
 
 /**
  * JUnit invoker for parameterised test methods
@@ -25,12 +27,17 @@ class InvokeParameterisedMethod extends Statement {
     private final Object[] params;
     private final FrameworkMethod testMethod;
     private final Object testClass;
-    private final String uniqueMethodId;
+//    private final String uniqueMethodId;
+    private String uniqueMethodName;
+    private TestCaseNamingStrategy namingStrategy;
 
     InvokeParameterisedMethod(FrameworkMethod testMethod, Object testClass, Object params, int paramSetIdx) {
         this.testMethod = testMethod;
         this.testClass = testClass;
-        this.uniqueMethodId = Utils.uniqueMethodId(paramSetIdx - 1, params, testMethod.getName());
+//        this.uniqueMethodId = Utils.uniqueMethodId(paramSetIdx - 1, params, testMethod.getName());
+        namingStrategy = new MacroSubstitutionNamingStrategy(testMethod);
+        uniqueMethodName = namingStrategy.getTestCaseName(paramSetIdx - 1, params);
+        uniqueMethodName = String.format("%s(%s)", uniqueMethodName, testClass.getClass().getName());
         try {
             if (params instanceof String)
                 this.params = castParamsFromString((String) params);
@@ -226,7 +233,7 @@ class InvokeParameterisedMethod extends Statement {
     }
 
     boolean matchesDescription(Description description) {
-        return description.hashCode() == uniqueMethodId.hashCode();
+        return description.hashCode() == uniqueMethodName.hashCode();
     }
 
     @Override
