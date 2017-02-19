@@ -32,7 +32,7 @@ public class IgnoringTest {
         assertThat(a).isEqualTo("");
     }
 
-    @Test
+/*    @Test
     @Ignore
     @Parameters(method = "someMethod")
     public void shouldNotTryToInvokeMethodWhenTestIgnored(Object a) {
@@ -42,5 +42,5 @@ public class IgnoringTest {
     private Object[] someMethod() {
         fail("Should not be called");
         return null;
-    }
+    }*/
 }

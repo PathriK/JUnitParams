@@ -44,13 +44,13 @@ public class ParamsConverterTest {
         assertThat(num).isEqualTo(1);
     }
 
-    @Test
+/*    @Test
     @Parameters(method = "params")
     public void convertParamsFromMethod(
             @ConvertParam(value = StringToDateConverter.class, options = "dd.MM.yyyy") Date date) {
         Calendar calendar = createCalendarWithDate(date);
         assertCalendarDate(calendar);
-    }
+    }*/
 
     @Test
     @Parameters({"01.12.2012"})
@@ -108,7 +108,7 @@ public class ParamsConverterTest {
 
     }
 
-    @Test
+/*    @Test
     @Parameters(method = "params")
     public void convertParamsFromMethodUsingCustomParamAnnotation(@DateParam Date date) {
         Calendar calendar = createCalendarWithDate(date);
@@ -117,7 +117,7 @@ public class ParamsConverterTest {
 
     private List<String> params() {
         return Arrays.asList("01.12.2012");
-    }
+    }*/
 
     @Test
     @Parameters({"2012-12-01"})

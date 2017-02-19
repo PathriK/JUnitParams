@@ -66,7 +66,7 @@ public class ObjectStringificationTest {
         assertThat(Utils.stringify(mixed)).isEqualTo("null, stringOne, [1, 2, 3], stringTwo, [one, two, null]");
     }
 
-    @Test
+    /*@Test
     @Parameters
     public void shouldCreateParameterObjectsOnce(Object object) {
         assertThat(object).isInstanceOf(A.class);
@@ -75,7 +75,7 @@ public class ObjectStringificationTest {
     public Object[] parametersForShouldCreateParameterObjectsOnce() {
         return new Object[]{new A()};
     }
-
+*/
     static class A {
         static int instances = 0;
         String test = "test";

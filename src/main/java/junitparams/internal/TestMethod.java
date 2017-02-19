@@ -12,8 +12,8 @@ import org.junit.runners.model.TestClass;
 
 import junitparams.internal.annotation.FrameworkMethodAnnotations;
 import junitparams.internal.parameters.ParametersReader;
-import junitparams.naming.MacroSubstitutionNamingStrategy;
-import junitparams.naming.TestCaseNamingStrategy;
+//import junitparams.naming.MacroSubstitutionNamingStrategy;
+//import junitparams.naming.TestCaseNamingStrategy;
 
 /**
  * A wrapper for a test method
@@ -26,7 +26,7 @@ public class TestMethod {
     private Class<?> testClass;
     private ParametersReader parametersReader;
     private Object[] cachedParameters;
-    private TestCaseNamingStrategy namingStrategy;
+//    private TestCaseNamingStrategy namingStrategy;
 
     public TestMethod(FrameworkMethod method, TestClass testClass) {
         this.frameworkMethod = method;
@@ -34,7 +34,7 @@ public class TestMethod {
         frameworkMethodAnnotations = new FrameworkMethodAnnotations(method);
         parametersReader = new ParametersReader(testClass(), frameworkMethod);
 
-        namingStrategy = new MacroSubstitutionNamingStrategy(frameworkMethod);
+//        namingStrategy = new MacroSubstitutionNamingStrategy(frameworkMethod);
     }
 
     public String name() {
@@ -102,7 +102,8 @@ public class TestMethod {
             Object[] params = parametersSets();
             for (int i = 0; i < params.length; i++) {
                 Object paramSet = params[i];
-                String name = namingStrategy.getTestCaseName(i, paramSet);
+//                String name = namingStrategy.getTestCaseName(i, paramSet);
+                String name = Utils.getTestCaseName(name(),paramSet, i);
 //                String uniqueMethodId = Utils.uniqueMethodId(i, paramSet, name());
 
                 parametrised.addChild(

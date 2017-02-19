@@ -11,7 +11,7 @@ public class SampleTestCase {
 
     }
 
-    @Test
+/*    @Test
     @Parameters(method = "getParameters")
     public void secondTestMethod(String parameter) throws Exception {
 
@@ -19,6 +19,6 @@ public class SampleTestCase {
 
     private Object[] getParameters() {
         return new Object[]{"a", "b"};
-    }
+    }*/
 
 }

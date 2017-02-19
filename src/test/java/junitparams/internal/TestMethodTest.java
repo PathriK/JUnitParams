@@ -76,7 +76,7 @@ public class TestMethodTest {
                 description.getChildren().get(1).getDisplayName());
     }
     
-    @Test
+ /*   @Test
     @Parameters
     public void testVarargs(String... strings){
     	assertArrayEquals("Hello world".split(" "), strings);
@@ -131,8 +131,8 @@ public class TestMethodTest {
         return new Object[]{new Object[]{new Pair(10, 30), new Pair(7, 17), new Pair(3, 13)}, new Object[]{new Pair(20, 40), new Pair(18,
                 21), new Pair(2, 19)}};
     }
-
-    @Test
+*/
+  /*  @Test
     @Parameters(method = "nullArray")
     public void varargsCheckPassesWithNullArray(boolean isNull, String... array) throws Exception {
         assertEquals(isNull, array == null);
@@ -143,7 +143,7 @@ public class TestMethodTest {
                 new Object[] { false, new String[] { "1", "2" } },
                 new Object[] { true, null },
         };
-    }
+    }*/
 
     private class Pair{
     	int x,y;

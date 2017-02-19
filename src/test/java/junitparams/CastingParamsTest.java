@@ -12,7 +12,7 @@ import junitparams.usage.person_example.*;
 @RunWith(JUnitParamsRunner.class)
 public class CastingParamsTest {
 
-    @Test
+ /*   @Test
     @Parameters
     public void wrapWithTypeBySingleArgConstructor(PersonTest.Person person) {
         assertThat(person.getAge()).isGreaterThan(0);
@@ -51,7 +51,7 @@ public class CastingParamsTest {
     }
     private Object strings() {
         return new Object[]{new Object[]{"1", "2"}, new Object[]{"2", "1"}};
-    }
+    }*/
 
     @Test
     @Parameters({"a,b", "b,a"})

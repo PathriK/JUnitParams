@@ -4,6 +4,17 @@
 
 *Parameterised tests that don't suck*
 
+NOTE: This is a customised version and might not work as expected. All the original version might not work in this fork.
+Original Repo: https://github.com/Pragmatists/JUnitParams
+
+List of functionalities removed:
+1. Filter
+2. FileParams
+3. Custom Test Case Name
+4. Combined Parameters
+5. Custom Parameters
+6. source and method options in Parameters Annotation 
+
 ## Example
 
 ``` java

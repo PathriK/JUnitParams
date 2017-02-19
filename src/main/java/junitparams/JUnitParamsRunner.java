@@ -13,7 +13,6 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 
 import junitparams.internal.ParameterisedTestClassRunner;
-import junitparams.internal.ParametrizedTestMethodsFilter;
 import junitparams.internal.TestMethod;
 
 /**
@@ -385,7 +384,7 @@ import junitparams.internal.TestMethod;
  */
 public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
 
-    private ParametrizedTestMethodsFilter parametrizedTestMethodsFilter = new ParametrizedTestMethodsFilter(this);
+//    private ParametrizedTestMethodsFilter parametrizedTestMethodsFilter = new ParametrizedTestMethodsFilter(this);
     private ParameterisedTestClassRunner parameterisedRunner;
     private Description description;
 
@@ -394,11 +393,11 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
         parameterisedRunner = new ParameterisedTestClassRunner(getTestClass());
     }
 
-    @Override
-    public void filter(Filter filter) throws NoTestsRemainException {
-        super.filter(filter);
-        this.parametrizedTestMethodsFilter = new ParametrizedTestMethodsFilter(this,filter);
-    }
+//    @Override
+//    public void filter(Filter filter) throws NoTestsRemainException {
+//        super.filter(filter);
+//        this.parametrizedTestMethodsFilter = new ParametrizedTestMethodsFilter(this,filter);
+//    }
 
     @Override
     protected void collectInitializationErrors(List<Throwable> errors) {
@@ -409,10 +408,10 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
 
     @Override
     protected void runChild(FrameworkMethod method, RunNotifier notifier) {
-        if (handleIgnored(method, notifier))
+    	TestMethod testMethod = parameterisedRunner.testMethodFor(method);
+    	if (handleIgnored(testMethod, notifier))
             return;
 
-        TestMethod testMethod = parameterisedRunner.testMethodFor(method);
         if (parameterisedRunner.shouldRun(testMethod)){
             parameterisedRunner.runParameterisedTest(testMethod, methodBlock(method), notifier);
         }
@@ -430,12 +429,12 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
         }
     }
 
-    private boolean handleIgnored(FrameworkMethod method, RunNotifier notifier) {
-        TestMethod testMethod = parameterisedRunner.testMethodFor(method);
-        if (testMethod.isIgnored())
-            notifier.fireTestIgnored(describeMethod(method));
-
-        return testMethod.isIgnored();
+    private boolean handleIgnored(TestMethod testMethod, RunNotifier notifier) {        
+        if (testMethod.isIgnored()){
+        	notifier.fireTestIgnored(describeMethod(testMethod.frameworkMethod()));
+        	return true;
+        }
+        return false;
     }
 
     @Override
@@ -467,7 +466,8 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
 
     private List<FrameworkMethod> getListOfMethods() {
         List<FrameworkMethod> frameworkMethods = parameterisedRunner.returnListOfMethods();
-        return parametrizedTestMethodsFilter.filteredMethods(frameworkMethods);
+        //return parametrizedTestMethodsFilter.filteredMethods(frameworkMethods);
+        return frameworkMethods;
     }
 
     public Description describeMethod(FrameworkMethod method) {

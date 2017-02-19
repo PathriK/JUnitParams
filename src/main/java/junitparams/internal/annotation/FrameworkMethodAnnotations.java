@@ -5,7 +5,7 @@ import java.lang.annotation.Annotation;
 import org.junit.runners.model.FrameworkMethod;
 
 import junitparams.Parameters;
-import junitparams.custom.CustomParameters;
+//import junitparams.custom.CustomParameters;
 
 public class FrameworkMethodAnnotations {
 
@@ -16,8 +16,8 @@ public class FrameworkMethodAnnotations {
     }
 
     public boolean isParametrised() {
-        return hasAnnotation(Parameters.class)
-                || hasCustomParameters();
+        //return hasAnnotation(Parameters.class)|| hasCustomParameters();
+    	return hasAnnotation(Parameters.class);
     }
 
     public Annotation[] allAnnotations() {
@@ -32,11 +32,11 @@ public class FrameworkMethodAnnotations {
         return getAnnotation(annotation) != null;
     }
 
-    public boolean hasCustomParameters() {
+/*    public boolean hasCustomParameters() {
         return getCustomParameters() != null;
     }
-
-    public CustomParametersDescriptor getCustomParameters() {
+*/
+ /*   public CustomParametersDescriptor getCustomParameters() {
         CustomParameters customParameters = frameworkMethod.getAnnotation(CustomParameters.class);
         if (customParameters != null) {
             return new CustomParametersDescriptor(customParameters);
@@ -49,5 +49,5 @@ public class FrameworkMethodAnnotations {
             }
         }
         return null;
-    }
+    }*/
 }

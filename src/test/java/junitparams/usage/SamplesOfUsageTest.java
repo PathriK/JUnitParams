@@ -8,16 +8,16 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import junitparams.FileParameters;
+//import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import junitparams.ParametersReaderProvidersTest;
+//import junitparams.ParametersReaderProvidersTest;
 import junitparams.ParamsConverterTest;
 import junitparams.converters.Param;
-import junitparams.custom.combined.CombinedParameters;
-import junitparams.mappers.CsvWithHeaderMapper;
-import junitparams.naming.TestCaseName;
-import junitparams.usage.person_example.PersonMapper;
+//import junitparams.custom.combined.CombinedParameters;
+//import junitparams.mappers.CsvWithHeaderMapper;
+//import junitparams.naming.TestCaseName;
+//import junitparams.usage.person_example.PersonMapper;
 import junitparams.usage.person_example.PersonTest;
 import junitparams.usage.person_example.PersonType;
 
@@ -35,7 +35,7 @@ public class SamplesOfUsageTest {
     @Parameters({"AAA|1", "BBB|2"})
     public void paramsInAnnotationPipeSeparated(String p1, Integer p2) { }
 
-    @Test
+ /*   @Test
     @Parameters
     public void paramsInDefaultMethod(String p1, Integer p2) { }
     private Object parametersForParamsInDefaultMethod() {
@@ -88,13 +88,13 @@ public class SamplesOfUsageTest {
                     Arrays.asList("s01e01", "s01e02"),
                     Arrays.asList("s02e01", "s02e02")
                 );
-    }
+    }*/
 
     @Test
     @Parameters({"SOME_VALUE", "OTHER_VALUE"})
     public void enumsAsParamInAnnotation(PersonType person) { }
 
-    @Test
+ /*   @Test
     @Parameters
     public void enumsAsParamsInMethod(PersonType person) { }
     private PersonType[] parametersForEnumsAsParamsInMethod() { return (PersonType[]) new PersonType[] {PersonType.SOME_VALUE}; }
@@ -109,9 +109,9 @@ public class SamplesOfUsageTest {
     public void wrapParamsWithConstructor(PersonTest.Person person) { }
     private Object parametersForWrapParamsWithConstructor() {
         return new Object[]{new Object[]{"first", 1}, new Object[]{"second", 2}};
-    }
+    }*/
 
-    @Test
+/*    @Test
     @FileParameters("src/test/resources/test.csv")
     public void loadParamsFromCsv(int age, String name) { }
 
@@ -125,7 +125,7 @@ public class SamplesOfUsageTest {
 
     @Test
     @FileParameters(value = "classpath:with_header.csv", mapper = CsvWithHeaderMapper.class)
-    public void loadParamsFromCsvWithHeader(int id, String name) { }
+    public void loadParamsFromCsvWithHeader(int id, String name) { }*/
 
     @Test
     @Parameters({ "01.12.2012" })
@@ -135,12 +135,12 @@ public class SamplesOfUsageTest {
     @Parameters("please\\, escape commas if you use it here and don't want your parameters to be splitted")
     public void commasInParametersUsage(String phrase) { }
 
-    @Test
+/*    @Test
     @Parameters({ "1,1", "2,2", "3,6" })
     @TestCaseName("factorial({0}) = {1}")
-    public void customNamesForTestCase(int argument, int result) { }
+    public void customNamesForTestCase(int argument, int result) { }*/
 
-    @Test
+ /*   @Test
     @Parameters({ "value1, value2", "value3, value4" })
     @TestCaseName("[{index}] {method}: {params}")
     public void predefinedMacroForTestCaseNames(String param1, String param2) { }
@@ -153,17 +153,17 @@ public class SamplesOfUsageTest {
         return $(
                 $(booleanValue, primitiveArray, stringValue, stringArray)
         );
-    }
+    }*/
 
-    @Test
+/*    @Test
     @Parameters(method = "mixedParameters")
     @TestCaseName("{0}, {1}, {2}, {3}")
     public void usageOfMultipleTypesOfParameters(
             boolean booleanValue, int[] primitiveArray, String stringValue, String[] stringArray) {
-    }
+    }*/
 
-    @Test
+/*    @Test
     @CombinedParameters({"AAA,BBB", "1|2"})
     public void combineParamsInAnnotation(String p1, Integer p2) {}
-
+*/
 }

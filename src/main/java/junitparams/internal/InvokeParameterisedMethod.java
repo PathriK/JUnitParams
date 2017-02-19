@@ -14,8 +14,8 @@ import junitparams.converters.ConversionFailedException;
 import junitparams.converters.ConvertParam;
 import junitparams.converters.ParamAnnotation;
 import junitparams.converters.ParamConverter;
-import junitparams.naming.MacroSubstitutionNamingStrategy;
-import junitparams.naming.TestCaseNamingStrategy;
+//import junitparams.naming.MacroSubstitutionNamingStrategy;
+//import junitparams.naming.TestCaseNamingStrategy;
 
 /**
  * JUnit invoker for parameterised test methods
@@ -29,14 +29,15 @@ class InvokeParameterisedMethod extends Statement {
     private final Object testClass;
 //    private final String uniqueMethodId;
     private String uniqueMethodName;
-    private TestCaseNamingStrategy namingStrategy;
+//    private TestCaseNamingStrategy namingStrategy;
 
     InvokeParameterisedMethod(FrameworkMethod testMethod, Object testClass, Object params, int paramSetIdx) {
         this.testMethod = testMethod;
         this.testClass = testClass;
 //        this.uniqueMethodId = Utils.uniqueMethodId(paramSetIdx - 1, params, testMethod.getName());
-        namingStrategy = new MacroSubstitutionNamingStrategy(testMethod);
-        uniqueMethodName = namingStrategy.getTestCaseName(paramSetIdx - 1, params);
+//        namingStrategy = new MacroSubstitutionNamingStrategy(testMethod);
+//        uniqueMethodName = namingStrategy.getTestCaseName(paramSetIdx - 1, params);
+        uniqueMethodName = Utils.getTestCaseName(testMethod.getName(), params, paramSetIdx -1); 
         uniqueMethodName = String.format("%s(%s)", uniqueMethodName, testClass.getClass().getName());
         try {
             if (params instanceof String)

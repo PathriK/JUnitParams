@@ -16,7 +16,7 @@ public class EnumsAsParamsTest {
         assertThat(person).isIn(PersonType.SOME_VALUE, PersonType.OTHER_VALUE);
     }
 
-    @Test
+/*    @Test
     @Parameters
     public void passEnumFromMethod(PersonType person) {
         assertThat(person).isIn(parametersForPassEnumFromMethod());
@@ -24,5 +24,5 @@ public class EnumsAsParamsTest {
 
     private PersonType[] parametersForPassEnumFromMethod() {
         return new PersonType[] {PersonType.SOME_VALUE, PersonType.OTHER_VALUE};
-    }
+    }*/
 }

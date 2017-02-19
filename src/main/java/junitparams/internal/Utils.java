@@ -183,4 +183,11 @@ public class Utils {
             return Arrays.toString((char[]) arrayOfPrimitives);
         }
     }
+
+	public static String getTestCaseName(String name, Object paramSet, int i) {
+		if(null == paramSet){
+			paramSet = "null";
+		}
+		return name + "(" + paramSet.toString() + ") [" + i + "]";
+	}
 }

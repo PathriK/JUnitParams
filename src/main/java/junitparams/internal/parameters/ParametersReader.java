@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.runners.model.FrameworkMethod;
 
-import junitparams.FileParameters;
+//import junitparams.FileParameters;
 import junitparams.Parameters;
 
 public class ParametersReader {
@@ -17,28 +17,31 @@ public class ParametersReader {
         = format("Illegal usage of JUnitParams in method %s. " +
                  "Check that you have only used one supported parameters evaluation strategy. " +
                  "Common case is to use both %s and %s annotations.",
-                 "%s", Parameters.class, FileParameters.class);
+                 "%s", Parameters.class, "FileParameters");
 
     private final FrameworkMethod frameworkMethod;
-    private final List<ParametrizationStrategy> strategies;
+//    private final List<ParametrizationStrategy> strategies;
+    private ParametersFromValue strategy;
 
     public ParametersReader(Class<?> testClass, FrameworkMethod frameworkMethod) {
         this.frameworkMethod = frameworkMethod;
 
-        strategies = asList(
+/*        strategies = asList(
                 new ParametersFromCustomProvider(frameworkMethod),
                 new ParametersFromValue(frameworkMethod),
                 new ParametersFromExternalClassProvideMethod(frameworkMethod),
                 new ParametersFromExternalClassMethod(frameworkMethod),
                 new ParametersFromTestClassMethod(frameworkMethod, testClass)
-        );
+        );*/
+        
+        strategy = new ParametersFromValue(frameworkMethod);        
     }
 
     public Object[] read() {
         boolean strategyAlreadyFound = false;
         Object[] parameters = new Object[]{};
 
-        for (ParametrizationStrategy strategy : strategies) {
+//        for (ParametrizationStrategy strategy : strategies) {
             if (strategy.isApplicable()) {
                 if (strategyAlreadyFound) {
                     illegalState();
@@ -46,7 +49,7 @@ public class ParametersReader {
                 parameters = strategy.getParameters();
                 strategyAlreadyFound = true;
             }
-        }
+//        }
         if (!strategyAlreadyFound) {
             noStrategyFound();
         }

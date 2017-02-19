@@ -10,7 +10,7 @@ import org.junit.runner.*;
 @RunWith(JUnitParamsRunner.class)
 public class ParametersReaderForMethodTest {
 
-    @Test
+/*    @Test
     @Parameters
     public void oneParamDifferentTypes(int number, String a) {
         assertThat(number).isEqualTo(1);
@@ -53,7 +53,7 @@ public class ParametersReaderForMethodTest {
 
     private Object[] parametersForShouldIgnoreWhenEmptyParamset() {
         return new Object[] {};
-    }
+    }*/
 
     @Test
     @Parameters({ "a \n \\,\\|b", "\\,a(asdf)\\|", "\\,", "", "\r\n" })
