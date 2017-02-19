@@ -10,7 +10,8 @@ import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
-import junitparams.internal.annotation.FrameworkMethodAnnotations;
+import junitparams.Parameters;
+//import junitparams.internal.annotation.FrameworkMethodAnnotations;
 import junitparams.internal.parameters.ParametersReader;
 //import junitparams.naming.MacroSubstitutionNamingStrategy;
 //import junitparams.naming.TestCaseNamingStrategy;
@@ -22,7 +23,7 @@ import junitparams.internal.parameters.ParametersReader;
  */
 public class TestMethod {
     private FrameworkMethod frameworkMethod;
-    private FrameworkMethodAnnotations frameworkMethodAnnotations;
+//    private FrameworkMethodAnnotations frameworkMethodAnnotations;
     private Class<?> testClass;
     private ParametersReader parametersReader;
     private Object[] cachedParameters;
@@ -31,7 +32,7 @@ public class TestMethod {
     public TestMethod(FrameworkMethod method, TestClass testClass) {
         this.frameworkMethod = method;
         this.testClass = testClass.getJavaClass();
-        frameworkMethodAnnotations = new FrameworkMethodAnnotations(method);
+//        frameworkMethodAnnotations = new FrameworkMethodAnnotations(method);
         parametersReader = new ParametersReader(testClass(), frameworkMethod);
 
 //        namingStrategy = new MacroSubstitutionNamingStrategy(frameworkMethod);
@@ -81,7 +82,8 @@ public class TestMethod {
     }
 
     private boolean hasIgnoredAnnotation() {
-        return frameworkMethodAnnotations.hasAnnotation(Ignore.class);
+//        return frameworkMethodAnnotations.hasAnnotation(Ignore.class);
+        return frameworkMethod.getAnnotation(Ignore.class) != null;
     }
 
     private boolean hasNoParameters() {
@@ -92,9 +94,9 @@ public class TestMethod {
         return !isIgnored();
     }
 
-    public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
+   /* public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
         return frameworkMethodAnnotations.getAnnotation(annotationType);
-    }
+    }*/
 
     Description describe() {
         if (isNotIgnored() && !describeFlat()) {
@@ -112,7 +114,7 @@ public class TestMethod {
             }
             return parametrised;
         } else {
-            return Description.createTestDescription(testClass(), name(), frameworkMethodAnnotations.allAnnotations());
+            return Description.createTestDescription(testClass(), name(), frameworkMethod.getAnnotations());
         }
     }
 
@@ -137,6 +139,7 @@ public class TestMethod {
     }
 
     boolean isParameterised() {
-        return frameworkMethodAnnotations.isParametrised();
+//        return frameworkMethodAnnotations.isParametrised();
+    	return frameworkMethod.getAnnotation(Parameters.class) != null;
     }
 }

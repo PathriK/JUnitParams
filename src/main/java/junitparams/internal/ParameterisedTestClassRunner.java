@@ -16,7 +16,6 @@ import org.junit.runners.model.TestClass;
  * Testclass-level functionalities to handle parameters from a JUnit runner
  * class.
  *
- * @author Pawel Lipinski
  */
 public class ParameterisedTestClassRunner {
 

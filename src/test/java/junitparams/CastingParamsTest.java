@@ -2,12 +2,8 @@ package junitparams;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.*;
-
 import org.junit.*;
 import org.junit.runner.*;
-
-import junitparams.usage.person_example.*;
 
 @RunWith(JUnitParamsRunner.class)
 public class CastingParamsTest {
