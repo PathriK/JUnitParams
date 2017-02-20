@@ -20,23 +20,17 @@ import junitparams.converters.ParamConverter;
 /**
  * JUnit invoker for parameterised test methods
  *
- * @author Pawel Lipinski
  */
 class InvokeParameterisedMethod extends Statement {
 
     private final Object[] params;
     private final FrameworkMethod testMethod;
     private final Object testClass;
-//    private final String uniqueMethodId;
     private String uniqueMethodName;
-//    private TestCaseNamingStrategy namingStrategy;
 
     InvokeParameterisedMethod(FrameworkMethod testMethod, Object testClass, Object params, int paramSetIdx) {
         this.testMethod = testMethod;
         this.testClass = testClass;
-//        this.uniqueMethodId = Utils.uniqueMethodId(paramSetIdx - 1, params, testMethod.getName());
-//        namingStrategy = new MacroSubstitutionNamingStrategy(testMethod);
-//        uniqueMethodName = namingStrategy.getTestCaseName(paramSetIdx - 1, params);
         uniqueMethodName = Utils.getTestCaseName(testMethod.getName(), params, paramSetIdx -1); 
         uniqueMethodName = String.format("%s(%s)", uniqueMethodName, testClass.getClass().getName());
         try {
@@ -45,7 +39,8 @@ class InvokeParameterisedMethod extends Statement {
             else {
                 this.params = castParamsFromObjects(params);
             }
-        } catch (ConversionFailedException e) {
+//        } catch (ConversionFailedException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -63,53 +58,54 @@ class InvokeParameterisedMethod extends Statement {
         return columns;
     }
 
-    private Object[] castParamsFromObjects(Object params) throws ConversionFailedException {
+//    private Object[] castParamsFromObjects(Object params) throws ConversionFailedException {
+    	private Object[] castParamsFromObjects(Object params) throws Exception {
         Object[] paramset = Utils.safelyCastParamsToArray(params);
 
-        try {
+//        try {
             return castParamsUsingConverters(paramset);
-        } catch (ConversionFailedException e) {
-            throw e;
-        } catch (Exception e) {
-            Class<?>[] typesOfParameters = createArrayOfTypesOf(paramset);
-            Object resultParam = createObjectOfExpectedTypeBasedOnParams(paramset, typesOfParameters);
-            return new Object[]{resultParam};
-        }
+//        } catch (ConversionFailedException e) {
+//            throw e;
+//        } catch (Exception e) {
+//            Class<?>[] typesOfParameters = createArrayOfTypesOf(paramset);
+//            Object resultParam = createObjectOfExpectedTypeBasedOnParams(paramset, typesOfParameters);
+//            return new Object[]{resultParam};
+//        }
     }
 
-    private Object createObjectOfExpectedTypeBasedOnParams(Object[] paramset, Class<?>[] typesOfParameters) {
-        Object resultParam;
+//    private Object createObjectOfExpectedTypeBasedOnParams(Object[] paramset, Class<?>[] typesOfParameters) {
+//        Object resultParam;
+//
+//        try {
+//            if (testMethod.getMethod().getParameterTypes()[0].isArray()) {
+//                resultParam = Array.newInstance(typesOfParameters[0], paramset.length);
+//                for (int i = 0; i < paramset.length; i++) {
+//                    ((Object[]) resultParam)[i] = paramset[i];
+//                }
+//            } else {
+//                resultParam = testMethod.getMethod().getParameterTypes()[0].getConstructor(typesOfParameters).newInstance(paramset);
+//            }
+//        } catch (Exception e) {
+//            throw new IllegalStateException("While trying to create object of class " + testMethod.getMethod().getParameterTypes()[0]
+//                    + " could not find constructor with arguments matching (type-wise) the ones given in parameters.", e);
+//        }
+//        return resultParam;
+//    }
 
-        try {
-            if (testMethod.getMethod().getParameterTypes()[0].isArray()) {
-                resultParam = Array.newInstance(typesOfParameters[0], paramset.length);
-                for (int i = 0; i < paramset.length; i++) {
-                    ((Object[]) resultParam)[i] = paramset[i];
-                }
-            } else {
-                resultParam = testMethod.getMethod().getParameterTypes()[0].getConstructor(typesOfParameters).newInstance(paramset);
-            }
-        } catch (Exception e) {
-            throw new IllegalStateException("While trying to create object of class " + testMethod.getMethod().getParameterTypes()[0]
-                    + " could not find constructor with arguments matching (type-wise) the ones given in parameters.", e);
-        }
-        return resultParam;
-    }
-
-    private Class<?>[] createArrayOfTypesOf(Object[] paramset) {
-        Class<?>[] parametersBasedOnValues = new Class<?>[paramset.length];
-        for (int i = 0; i < paramset.length; i++) {
-            parametersBasedOnValues[i] = paramset[i].getClass();
-        }
-        return parametersBasedOnValues;
-    }
+//    private Class<?>[] createArrayOfTypesOf(Object[] paramset) {
+//        Class<?>[] parametersBasedOnValues = new Class<?>[paramset.length];
+//        for (int i = 0; i < paramset.length; i++) {
+//            parametersBasedOnValues[i] = paramset[i].getClass();
+//        }
+//        return parametersBasedOnValues;
+//    }
 
     private Object[] castParamsUsingConverters(Object[] columns) throws ConversionFailedException {
         Class<?>[] expectedParameterTypes = testMethod.getMethod().getParameterTypes();
 
-        if (testMethodParamsHasVarargs(columns, expectedParameterTypes)) {
-            columns = columnsWithVarargs(columns, expectedParameterTypes);
-        }
+//        if (testMethodParamsHasVarargs(columns, expectedParameterTypes)) {
+//            columns = columnsWithVarargs(columns, expectedParameterTypes);
+//        }
 
         Annotation[][] parameterAnnotations = testMethod.getMethod().getParameterAnnotations();
         verifySameSizeOfArrays(columns, expectedParameterTypes);
@@ -117,38 +113,38 @@ class InvokeParameterisedMethod extends Statement {
         return columns;
     }
 
-    private Object[] columnsWithVarargs(Object[] columns, Class<?>[] expectedParameterTypes) {
-        Object[] allParameters = standardParameters(columns, expectedParameterTypes);
-        allParameters[allParameters.length - 1] = varargsParameters(columns, expectedParameterTypes);
-        return allParameters;
-    }
+//    private Object[] columnsWithVarargs(Object[] columns, Class<?>[] expectedParameterTypes) {
+//        Object[] allParameters = standardParameters(columns, expectedParameterTypes);
+//        allParameters[allParameters.length - 1] = varargsParameters(columns, expectedParameterTypes);
+//        return allParameters;
+//    }
 
-    private Object[] varargsParameters(Object[] columns, Class<?>[] expectedParameterTypes) {
-        Class<?> varArgType = expectedParameterTypes[expectedParameterTypes.length - 1].getComponentType();
-        Object[] varArgsParameters = (Object[]) Array.newInstance(varArgType, columns.length - expectedParameterTypes.length + 1);
-        for (int i = 0; i < varArgsParameters.length; i++) {
-            varArgsParameters[i] = columns[i + expectedParameterTypes.length - 1];
-        }
-        return varArgsParameters;
-    }
+//    private Object[] varargsParameters(Object[] columns, Class<?>[] expectedParameterTypes) {
+//        Class<?> varArgType = expectedParameterTypes[expectedParameterTypes.length - 1].getComponentType();
+//        Object[] varArgsParameters = (Object[]) Array.newInstance(varArgType, columns.length - expectedParameterTypes.length + 1);
+//        for (int i = 0; i < varArgsParameters.length; i++) {
+//            varArgsParameters[i] = columns[i + expectedParameterTypes.length - 1];
+//        }
+//        return varArgsParameters;
+//    }
 
-    private Object[] standardParameters(Object[] columns, Class<?>[] expectedParameterTypes) {
-        Object[] standardParameters = new Object[expectedParameterTypes.length];
-        for (int i = 0; i < standardParameters.length - 1; i++) {
-            standardParameters[i] = columns[i];
-        }
-        return standardParameters;
-    }
+//    private Object[] standardParameters(Object[] columns, Class<?>[] expectedParameterTypes) {
+//        Object[] standardParameters = new Object[expectedParameterTypes.length];
+//        for (int i = 0; i < standardParameters.length - 1; i++) {
+//            standardParameters[i] = columns[i];
+//        }
+//        return standardParameters;
+//    }
 
-    private boolean testMethodParamsHasVarargs(Object[] columns, Class<?>[] expectedParameterTypes) {
-        int last = expectedParameterTypes.length - 1;
-        if (columns[last] == null) {
-            return false;
-        }
-        return expectedParameterTypes.length <= columns.length
-                && expectedParameterTypes[last].isArray()
-                && expectedParameterTypes[last].getComponentType().equals(columns[last].getClass());
-    }
+//    private boolean testMethodParamsHasVarargs(Object[] columns, Class<?>[] expectedParameterTypes) {
+//        int last = expectedParameterTypes.length - 1;
+//        if (columns[last] == null) {
+//            return false;
+//        }
+//        return expectedParameterTypes.length <= columns.length
+//                && expectedParameterTypes[last].isArray()
+//                && expectedParameterTypes[last].getComponentType().equals(columns[last].getClass());
+//    }
 
     private Object[] castAllParametersToProperTypes(Object[] columns, Class<?>[] expectedParameterTypes,
                                                     Annotation[][] parameterAnnotations) throws ConversionFailedException {

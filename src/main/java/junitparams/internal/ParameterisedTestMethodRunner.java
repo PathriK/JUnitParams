@@ -11,7 +11,6 @@ import org.junit.runners.model.Statement;
 /**
  * Testmethod-level functionalities for parameterised tests
  *
- * @author Pawel Lipinski
  */
 public class ParameterisedTestMethodRunner {
 

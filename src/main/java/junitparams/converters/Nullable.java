@@ -11,7 +11,6 @@ import junitparams.Parameters;
 /**
  * Allows test null values defined as a String array in {@link Parameters} 
  * 
- * @author Peter Jurkovic
  * 
  * <p>
  * Example: 

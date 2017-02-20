@@ -8,7 +8,6 @@ package junitparams.converters;
  * &lt;T&gt; is the expected parameter type.
  *
  * @deprecated use {@link Converter}
- * @author Pawel Lipinski
  */
 @Deprecated
 public interface ParamConverter<T> {

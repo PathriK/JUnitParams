@@ -54,39 +54,39 @@ public class UtilsTest {
         assertThat(result).containsExactly("test");
     }
 
-    @Test
-    public void shouldReplaceUnixNewLineWithSpace() {
-        // given
-        Object paramSet = "\n";
+//    @Test
+//    public void shouldReplaceUnixNewLineWithSpace() {
+//        // given
+//        Object paramSet = "\n";
+//
+//        // when
+//        String result = Utils.stringify(paramSet);
+//
+//        // then
+//        assertThat(result).isEqualTo(" ");
+//    }
 
-        // when
-        String result = Utils.stringify(paramSet);
+//    @Test
+//    public void shouldReplaceMacNewLineWithSpace() {
+//        // given
+//        Object paramSet = "\r";
+//
+//        // when
+//        String result = Utils.stringify(paramSet);
+//
+//        // then
+//        assertThat(result).isEqualTo(" ");
+//    }
 
-        // then
-        assertThat(result).isEqualTo(" ");
-    }
-
-    @Test
-    public void shouldReplaceMacNewLineWithSpace() {
-        // given
-        Object paramSet = "\r";
-
-        // when
-        String result = Utils.stringify(paramSet);
-
-        // then
-        assertThat(result).isEqualTo(" ");
-    }
-
-    @Test
-    public void shouldReplaceParenthesisWithBrackets() {
-        // given
-        Object paramSet = "()";
-
-        // when
-        String result = Utils.stringify(paramSet);
-
-        // then
-        assertThat(result).isEqualTo("[]");
-    }
+//    @Test
+//    public void shouldReplaceParenthesisWithBrackets() {
+//        // given
+//        Object paramSet = "()";
+//
+//        // when
+//        String result = Utils.stringify(paramSet);
+//
+//        // then
+//        assertThat(result).isEqualTo("[]");
+//    }
 }

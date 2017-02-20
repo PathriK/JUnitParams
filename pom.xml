@@ -1,24 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>oss-parent</artifactId>
-        <groupId>org.sonatype.oss</groupId>
-        <version>9</version>
-    </parent>
     <groupId>in.pathrik.junit</groupId>
     <artifactId>JUnitParams</artifactId>
-    <version>1.0.7-SNAPSHOT</version>
+    <version>1.0.7-PATHRIK-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>JUnitParams</name>
+    <name>JUnitParamsSlim</name>
     <description>Better parameterised tests for JUnit</description>
-    <url>https://github.com/Pragmatists/JUnitParams</url>
+    <url>https://github.com/PathriK/JUnitParams</url>
     <developers>
         <developer>
-            <id>pawel.lipinski</id>
-            <name>Pawel Lipinski</name>
-            <email>pawel.lipinski@pragmatists.pl</email>
-            <organization>Pragmatists</organization>
-            <organizationUrl>http://pragmatists.pl</organizationUrl>
+            <id></id>
+            <name></name>
+            <email></email>
+            <organization></organization>
+            <organizationUrl></organizationUrl>
         </developer>
     </developers>
     <licenses>
@@ -31,18 +26,14 @@
     </licenses>
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/Pragmatists/JUnitParams/issues</url>
+        <url>https://github.com/PathriK/JUnitParams/issues</url>
     </issueManagement>
     <scm>
-        <connection>scm:git:git://github.com/Pragmatists/JUnitParams.git</connection>
-        <developerConnection>scm:git:git@github.com:Pragmatists/JUnitParams.git</developerConnection>
-        <url>https://github.com/Pragmatists/JUnitParams</url>
-        <tag>JUnitParams-1.0.4</tag>
+        <connection>scm:git:git://github.com/PathriK/JUnitParams.git</connection>
+        <developerConnection>scm:git:git@github.com:PathriK/JUnitParams.git</developerConnection>
+        <url>https://github.com/PathriK/JUnitParams</url>
+        <tag>JUnitParams-1.0.7-PATHRIK</tag>
     </scm>
-    <organization>
-        <name>Pragmatists</name>
-        <url>http://pragmatists.pl</url>
-    </organization>
     <distributionManagement>
  		<snapshotRepository>
 			<id>bintray-pathrik-PathriK-snapshots</id>

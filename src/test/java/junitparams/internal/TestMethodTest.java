@@ -23,9 +23,9 @@ public class TestMethodTest {
     public void setUp() throws Exception {
         plainTestMethod = new TestMethod(new FrameworkMethod(TestMethodTest.class.getMethod("forOthersToWork", new Class[]{String.class})),
                 new TestClass(this.getClass()));
-        arrayTestMethod = new TestMethod(new FrameworkMethod(TestMethodTest.class.getMethod("forOthersToWorkWithArray",
-                new Class[]{(new String[]{}).getClass()})),
-                new TestClass(this.getClass()));
+//        arrayTestMethod = new TestMethod(new FrameworkMethod(TestMethodTest.class.getMethod("forOthersToWorkWithArray",
+//                new Class[]{(new String[]{}).getClass()})),
+//                new TestClass(this.getClass()));
     }
 
     @Test
@@ -35,11 +35,11 @@ public class TestMethodTest {
     }
 
 
-    @Test
+/*    @Test
     @Parameters({"a,b","b,a"})
     public void forOthersToWorkWithArray(String... arg) throws Exception {
         assertThat(arg).containsOnlyOnce("a","b");
-    }
+    }*/
 
     @Test
     @Ignore
@@ -64,7 +64,7 @@ public class TestMethodTest {
         assertEquals("forOthersToWork(b) [1](junitparams.internal.TestMethodTest)", description.getChildren().get(1).getDisplayName());
     }
 
-    @Test
+/*    @Test
     public void hierarchicalArrayTestMethodStructure() throws Exception {
         System.clearProperty("JUnitParams.flat");
         Description description = arrayTestMethod.describe();
@@ -74,7 +74,7 @@ public class TestMethodTest {
                 description.getChildren().get(0).getDisplayName());
         assertEquals("forOthersToWorkWithArray(b,a) [1](junitparams.internal.TestMethodTest)",
                 description.getChildren().get(1).getDisplayName());
-    }
+    }*/
     
  /*   @Test
     @Parameters

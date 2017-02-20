@@ -1,6 +1,7 @@
 package junitparams.internal;
 
-import java.lang.annotation.Annotation;
+import static java.lang.String.format;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,31 +12,24 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
 import junitparams.Parameters;
-//import junitparams.internal.annotation.FrameworkMethodAnnotations;
-import junitparams.internal.parameters.ParametersReader;
-//import junitparams.naming.MacroSubstitutionNamingStrategy;
-//import junitparams.naming.TestCaseNamingStrategy;
+//import junitparams.internal.parameters.ParametersReader;
 
 /**
  * A wrapper for a test method
  *
- * @author Pawel Lipinski
  */
 public class TestMethod {
     private FrameworkMethod frameworkMethod;
-//    private FrameworkMethodAnnotations frameworkMethodAnnotations;
     private Class<?> testClass;
-    private ParametersReader parametersReader;
+//    private ParametersReader parametersReader;
     private Object[] cachedParameters;
-//    private TestCaseNamingStrategy namingStrategy;
+    private final Parameters parametersAnnotation;
 
     public TestMethod(FrameworkMethod method, TestClass testClass) {
         this.frameworkMethod = method;
         this.testClass = testClass.getJavaClass();
-//        frameworkMethodAnnotations = new FrameworkMethodAnnotations(method);
-        parametersReader = new ParametersReader(testClass(), frameworkMethod);
-
-//        namingStrategy = new MacroSubstitutionNamingStrategy(frameworkMethod);
+//        parametersReader = new ParametersReader(testClass(), frameworkMethod);
+        this.parametersAnnotation = frameworkMethod.getAnnotation(Parameters.class);
     }
 
     public String name() {
@@ -82,7 +76,6 @@ public class TestMethod {
     }
 
     private boolean hasIgnoredAnnotation() {
-//        return frameworkMethodAnnotations.hasAnnotation(Ignore.class);
         return frameworkMethod.getAnnotation(Ignore.class) != null;
     }
 
@@ -94,19 +87,13 @@ public class TestMethod {
         return !isIgnored();
     }
 
-   /* public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
-        return frameworkMethodAnnotations.getAnnotation(annotationType);
-    }*/
-
     Description describe() {
         if (isNotIgnored() && !describeFlat()) {
             Description parametrised = Description.createSuiteDescription(name());
             Object[] params = parametersSets();
             for (int i = 0; i < params.length; i++) {
                 Object paramSet = params[i];
-//                String name = namingStrategy.getTestCaseName(i, paramSet);
                 String name = Utils.getTestCaseName(name(),paramSet, i);
-//                String uniqueMethodId = Utils.uniqueMethodId(i, paramSet, name());
 
                 parametrised.addChild(
                         Description.createTestDescription(testClass(), name)
@@ -124,7 +111,7 @@ public class TestMethod {
 
     public Object[] parametersSets() {
         if (cachedParameters == null) {
-            cachedParameters = parametersReader.read();
+            cachedParameters = read();
         }
         return cachedParameters;
     }
@@ -139,7 +126,30 @@ public class TestMethod {
     }
 
     boolean isParameterised() {
-//        return frameworkMethodAnnotations.isParametrised();
     	return frameworkMethod.getAnnotation(Parameters.class) != null;
     }
+    
+    private Object[] read() {
+        Object[] parameters = new Object[]{};
+            if (isApplicable()) {
+                parameters = getParameters();
+            }else{
+            	noStrategyFound();	
+            }            
+        return parameters;
+    }    
+    
+    private void noStrategyFound() {
+        throw new IllegalStateException(format("Method %s#%s is annotated with @Parameters but there were no parameters provided.",
+                frameworkMethod.getMethod().getDeclaringClass().getName(), frameworkMethod.getName()));
+    }
+    
+
+    private Object[] getParameters() {
+        return parametersAnnotation.value();
+    }
+    
+    private boolean isApplicable() {
+        return parametersAnnotation != null && parametersAnnotation.value().length > 0;
+    }       
 }

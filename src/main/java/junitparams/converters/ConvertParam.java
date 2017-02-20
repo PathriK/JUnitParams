@@ -8,7 +8,6 @@ import java.lang.annotation.*;
  * type.
  *
  * @deprecated use {@link Param}
- * @author Pawel Lipinski
  */
 
 @Retention(RetentionPolicy.RUNTIME)

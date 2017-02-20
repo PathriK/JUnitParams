@@ -13,7 +13,8 @@ List of functionalities removed:
 3. Custom Test Case Name
 4. Combined Parameters
 5. Custom Parameters
-6. source and method options in Parameters Annotation 
+6. source and method options in Parameters Annotation
+7. Varargs in Test Parameters
 
 ## Example
 
