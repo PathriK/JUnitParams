@@ -21,14 +21,12 @@ import junitparams.Parameters;
 public class TestMethod {
     private FrameworkMethod frameworkMethod;
     private Class<?> testClass;
-//    private ParametersReader parametersReader;
     private Object[] cachedParameters;
     private final Parameters parametersAnnotation;
 
     public TestMethod(FrameworkMethod method, TestClass testClass) {
         this.frameworkMethod = method;
         this.testClass = testClass.getJavaClass();
-//        parametersReader = new ParametersReader(testClass(), frameworkMethod);
         this.parametersAnnotation = frameworkMethod.getAnnotation(Parameters.class);
     }
 

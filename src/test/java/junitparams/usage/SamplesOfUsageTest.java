@@ -8,8 +8,8 @@ import org.junit.runner.RunWith;
 //import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import junitparams.ParamsConverterTest;
-import junitparams.converters.Param;
+//import junitparams.ParamsConverterTest;
+//import junitparams.converters.Param;
 import junitparams.usage.person_example.PersonType;
 
 @RunWith(JUnitParamsRunner.class)
@@ -115,9 +115,9 @@ public class SamplesOfUsageTest {
     @FileParameters(value = "classpath:with_header.csv", mapper = CsvWithHeaderMapper.class)
     public void loadParamsFromCsvWithHeader(int id, String name) { }*/
 
-    @Test
-    @Parameters({ "01.12.2012" })
-    public void convertParams(@Param(converter = ParamsConverterTest.SimpleDateConverter.class) Date date) {}
+//    @Test
+//    @Parameters({ "01.12.2012" })
+//    public void convertParams(@Param(converter = ParamsConverterTest.SimpleDateConverter.class) Date date) {}
 
     @Test
     @Parameters("please\\, escape commas if you use it here and don't want your parameters to be splitted")

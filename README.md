@@ -15,6 +15,7 @@ List of functionalities removed:
 5. Custom Parameters
 6. source and method options in Parameters Annotation
 7. Varargs in Test Parameters
+8. Parameter converters
 
 ## Example
 
