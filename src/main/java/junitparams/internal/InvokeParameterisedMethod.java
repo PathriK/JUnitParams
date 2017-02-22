@@ -9,11 +9,6 @@ import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
-//import junitparams.converters.ConversionFailedException;
-//import junitparams.converters.ConvertParam;
-//import junitparams.converters.ParamAnnotation;
-//import junitparams.converters.ParamConverter;
-
 /**
  * JUnit invoker for parameterised test methods
  *
@@ -78,33 +73,11 @@ class InvokeParameterisedMethod extends Statement {
 			if (parameterAnnotations[i].length == 0)
 				result[i] = castParameterDirectly(columns[i], expectedParameterTypes[i]);
 			else
-//				result[i] = castParameterUsingConverter(columns[i], parameterAnnotations[i]);
 			throw new IllegalArgumentException("annotation is not supported in function arguments");
 		}
 
 		return result;
 	}
-
-//	private Object castParameterUsingConverter(Object param, Annotation[] annotations)
-//			throws ConversionFailedException {
-//		for (Annotation annotation : annotations) {
-//			if (ParamAnnotation.matches(annotation)) {
-//				param = ParamAnnotation.convert(annotation, param);
-//			}
-//			if (annotation.annotationType().isAssignableFrom(ConvertParam.class)) {
-//				Class<? extends ParamConverter<?>> converterClass = ((ConvertParam) annotation).value();
-//				String options = ((ConvertParam) annotation).options();
-//				try {
-//					param = converterClass.newInstance().convert(param, options);
-//				} catch (ConversionFailedException e) {
-//					throw e;
-//				} catch (Exception e) {
-//					throw new RuntimeException("Your ParamConverter class must have a public no-arg constructor!", e);
-//				}
-//			}
-//		}
-//		return param;
-//	}
 
 	@SuppressWarnings("unchecked")
 	private Object castParameterDirectly(Object object, Class clazz) {
