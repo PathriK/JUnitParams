@@ -101,8 +101,4 @@ public class JUnitParamsRunner extends BlockJUnit4ClassRunner {
         return child;
     }
     
-    @Deprecated
-    public static Object[] $(Object... params) {
-        return params;
-    }    
 }

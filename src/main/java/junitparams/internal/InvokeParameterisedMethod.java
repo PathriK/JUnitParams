@@ -29,7 +29,8 @@ class InvokeParameterisedMethod extends Statement {
 			if (params instanceof String)
 				this.params = castParamsFromString((String) params);
 			else {
-				this.params = castParamsFromObjects(params);
+//				this.params = castParamsFromObjects(params);
+				throw new IllegalArgumentException("parameter is not a string");
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -50,18 +51,19 @@ class InvokeParameterisedMethod extends Statement {
 		return columns;
 	}
 
-	private Object[] castParamsFromObjects(Object params) throws Exception {
-		Object[] paramset = Utils.safelyCastParamsToArray(params);
-
-		return castParamsUsingConverters(paramset);
-	}
+//	private Object[] castParamsFromObjects(Object params) throws Exception {
+//		Object[] paramset = Utils.safelyCastParamsToArray(params);
+//
+//		return castParamsUsingConverters(paramset);
+//	}
 
 	private Object[] castParamsUsingConverters(Object[] columns) throws IllegalArgumentException{
 		Class<?>[] expectedParameterTypes = testMethod.getMethod().getParameterTypes();
 
-		Annotation[][] parameterAnnotations = testMethod.getMethod().getParameterAnnotations();
+//		Annotation[][] parameterAnnotations = testMethod.getMethod().getParameterAnnotations();
 		verifySameSizeOfArrays(columns, expectedParameterTypes);
-		columns = castAllParametersToProperTypes(columns, expectedParameterTypes, parameterAnnotations);
+//		columns = castAllParametersToProperTypes(columns, expectedParameterTypes, parameterAnnotations);
+		columns = castAllParametersToProperTypes(columns, expectedParameterTypes, null);
 		return columns;
 	}
 
@@ -70,10 +72,10 @@ class InvokeParameterisedMethod extends Statement {
 		Object[] result = new Object[columns.length];
 
 		for (int i = 0; i < columns.length; i++) {
-			if (parameterAnnotations[i].length == 0)
+//			if (parameterAnnotations[i].length == 0)
 				result[i] = castParameterDirectly(columns[i], expectedParameterTypes[i]);
-			else
-			throw new IllegalArgumentException("annotation is not supported in function arguments");
+//			else
+//			throw new IllegalArgumentException("annotation is not supported in function arguments");
 		}
 
 		return result;
