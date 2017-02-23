@@ -2,7 +2,6 @@ package junitparams.internal;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
-import java.lang.annotation.Annotation;
 import java.math.BigDecimal;
 
 import org.junit.runner.Description;
@@ -29,7 +28,6 @@ class InvokeParameterisedMethod extends Statement {
 			if (params instanceof String)
 				this.params = castParamsFromString((String) params);
 			else {
-//				this.params = castParamsFromObjects(params);
 				throw new IllegalArgumentException("parameter is not a string");
 			}
 		} catch (Exception e) {
@@ -41,7 +39,13 @@ class InvokeParameterisedMethod extends Statement {
 		Object[] columns = null;
 		try {
 			columns = Utils.splitAtCommaOrPipe(params);
-			columns = castParamsUsingConverters(columns);
+			Class<?>[] expectedParameterTypes = testMethod.getMethod().getParameterTypes();	
+			verifySameSizeOfArrays(columns, expectedParameterTypes);
+			Object[] result = new Object[columns.length];
+			for (int i = 0; i < columns.length; i++) {
+				result[i] = castParameterDirectly(columns[i], expectedParameterTypes[i]);
+			}
+			columns = result;			
 		} catch (RuntimeException e) {
 			new IllegalArgumentException(
 					"Cannot parse parameters. Did you use ',' or '|' as column separator? " + params, e)
@@ -49,36 +53,6 @@ class InvokeParameterisedMethod extends Statement {
 		}
 
 		return columns;
-	}
-
-//	private Object[] castParamsFromObjects(Object params) throws Exception {
-//		Object[] paramset = Utils.safelyCastParamsToArray(params);
-//
-//		return castParamsUsingConverters(paramset);
-//	}
-
-	private Object[] castParamsUsingConverters(Object[] columns) throws IllegalArgumentException{
-		Class<?>[] expectedParameterTypes = testMethod.getMethod().getParameterTypes();
-
-//		Annotation[][] parameterAnnotations = testMethod.getMethod().getParameterAnnotations();
-		verifySameSizeOfArrays(columns, expectedParameterTypes);
-//		columns = castAllParametersToProperTypes(columns, expectedParameterTypes, parameterAnnotations);
-		columns = castAllParametersToProperTypes(columns, expectedParameterTypes, null);
-		return columns;
-	}
-
-	private Object[] castAllParametersToProperTypes(Object[] columns, Class<?>[] expectedParameterTypes,
-			Annotation[][] parameterAnnotations) throws IllegalArgumentException {
-		Object[] result = new Object[columns.length];
-
-		for (int i = 0; i < columns.length; i++) {
-//			if (parameterAnnotations[i].length == 0)
-				result[i] = castParameterDirectly(columns[i], expectedParameterTypes[i]);
-//			else
-//			throw new IllegalArgumentException("annotation is not supported in function arguments");
-		}
-
-		return result;
 	}
 
 	@SuppressWarnings("unchecked")
