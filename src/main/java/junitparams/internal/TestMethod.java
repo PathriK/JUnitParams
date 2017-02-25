@@ -34,14 +34,14 @@ public class TestMethod {
         return frameworkMethod.getName();
     }
 
-    static List<TestMethod> listFrom(List<FrameworkMethod> annotatedMethods, TestClass testClass) {
-        List<TestMethod> methods = new ArrayList<TestMethod>();
-
-        for (FrameworkMethod frameworkMethod : annotatedMethods)
-            methods.add(new TestMethod(frameworkMethod, testClass));
-
-        return methods;
-    }
+//    static List<TestMethod> listFrom(List<FrameworkMethod> annotatedMethods, TestClass testClass) {
+//        List<TestMethod> methods = new ArrayList<TestMethod>();
+//
+//        for (FrameworkMethod frameworkMethod : annotatedMethods)
+//            methods.add(new TestMethod(frameworkMethod, testClass));
+//
+//        return methods;
+//    }
 
     @Override
     public int hashCode() {
@@ -81,12 +81,13 @@ public class TestMethod {
        return isParameterised() && parametersSets().length == 0;
     }
 
-    public boolean isNotIgnored() {
-        return !isIgnored();
-    }
+//    public boolean isNotIgnored() {
+//        return !isIgnored();
+//    }
 
     Description describe() {
-        if (isNotIgnored() && !describeFlat()) {
+//        if (isNotIgnored() && !describeFlat()) {
+    	if (!isIgnored() && !describeFlat()) {
             Description parametrised = Description.createSuiteDescription(name());
             Object[] params = parametersSets();
             for (int i = 0; i < params.length; i++) {
@@ -114,10 +115,10 @@ public class TestMethod {
         return cachedParameters;
     }
 
-    void warnIfNoParamsGiven() {
-        if (isNotIgnored() && isParameterised() && parametersSets().length == 0)
-            System.err.println("Method " + name() + " gets empty list of parameters, so it's being ignored!");
-    }
+//    void warnIfNoParamsGiven() {
+//        if (isNotIgnored() && isParameterised() && parametersSets().length == 0)
+//            System.err.println("Method " + name() + " gets empty list of parameters, so it's being ignored!");
+//    }
 
     public FrameworkMethod frameworkMethod() {
         return frameworkMethod;

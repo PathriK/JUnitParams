@@ -22,6 +22,8 @@ public class ParameterisedTestClassRunner {
     private Map<TestMethod, ParameterisedTestMethodRunner> parameterisedMethods = new HashMap<TestMethod, ParameterisedTestMethodRunner>();
     private Map<FrameworkMethod, TestMethod> testMethods = new HashMap<FrameworkMethod, TestMethod>();
     private List<TestMethod> testMethodsList;
+    private List<FrameworkMethod> computeMethods;
+    private List<FrameworkMethod> resultMethods;
 
     /**
      * Creates a runner for a given test class. Computes all the test methods
@@ -31,18 +33,37 @@ public class ParameterisedTestClassRunner {
      */
     public ParameterisedTestClassRunner(TestClass testClass) {
         computeTestMethods(testClass);
-        fillTestMethodsMap();
-        computeFrameworkMethods();
+//        fillTestMethodsMap();
+//        computeFrameworkMethods();
     }
 
     private void computeTestMethods(TestClass testClass) {
-        testMethodsList = TestMethod.listFrom(testClass.getAnnotatedMethods(Test.class), testClass);
+//        testMethodsList = TestMethod.listFrom(testClass.getAnnotatedMethods(Test.class), testClass);
+    	List<FrameworkMethod> annotatedMethods = testClass.getAnnotatedMethods(Test.class);  
+    	testMethodsList = new ArrayList<TestMethod>();
+    	computeMethods = new ArrayList<FrameworkMethod>();
+    	resultMethods = new ArrayList<FrameworkMethod>();
+                for (FrameworkMethod frameworkMethod : annotatedMethods){
+                	TestMethod testMethod = new TestMethod(frameworkMethod, testClass);
+                	testMethodsList.add(testMethod);
+                	testMethods.put(frameworkMethod, testMethod);
+                	cacheMethodRunner(testMethod);
+                	addTestMethodForEachParamSet(computeMethods, testMethod);
+                	resultMethods.add(testMethod.frameworkMethod());
+//                    if (testMethod.isParameterised())
+//                        addTestMethodForEachParamSet(resultMethods, testMethod);
+//                    else
+//                    	resultMethods.add(testMethod.frameworkMethod());                	
+                }
+                
+                
+                	
     }
 
-    private void fillTestMethodsMap() {
-        for (TestMethod testMethod : testMethodsList)
-            testMethods.put(testMethod.frameworkMethod(), testMethod);
-    }
+//    private void fillTestMethodsMap() {
+//        for (TestMethod testMethod : testMethodsList)
+//            testMethods.put(testMethod.frameworkMethod(), testMethod);
+//    }
 
     /**
      * Returns a list of <code>FrameworkMethod</code>s. Handles both
@@ -52,16 +73,16 @@ public class ParameterisedTestClassRunner {
      * @return a list of FrameworkMethod objects
      */
     public List<FrameworkMethod> computeFrameworkMethods() {
-        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
+//        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
+//
+//        for (TestMethod testMethod : testMethodsList) {
+//            if (testMethod.isParameterised())
+//                addTestMethodForEachParamSet(resultMethods, testMethod);
+//            else
+//                addTestMethodOnce(resultMethods, testMethod);
+//        }
 
-        for (TestMethod testMethod : testMethodsList) {
-            if (testMethod.isParameterised())
-                addTestMethodForEachParamSet(resultMethods, testMethod);
-            else
-                addTestMethodOnce(resultMethods, testMethod);
-        }
-
-        return resultMethods;
+        return computeMethods;
     }
 
     /**
@@ -70,30 +91,45 @@ public class ParameterisedTestClassRunner {
      * For JUnit to build names for IDE.
      */
     public List<FrameworkMethod> returnListOfMethods() {
-        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
-
-        for (TestMethod testMethod : testMethodsList) {
-            addTestMethodOnce(resultMethods, testMethod);
-            cacheMethodRunner(testMethod);
-            testMethod.warnIfNoParamsGiven();
-        }
+//        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
+//
+//        for (TestMethod testMethod : testMethodsList) {
+//            addTestMethodOnce(resultMethods, testMethod);
+//            cacheMethodRunner(testMethod);
+//            testMethod.warnIfNoParamsGiven();
+//        }
 
         return resultMethods;
     }
 
     private void addTestMethodForEachParamSet(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
-        if (testMethod.isNotIgnored()) {
+    	if (testMethod.isParameterised() && !testMethod.isIgnored()){
             int paramSetSize = testMethod.parametersSets().length;
             for (int i = 0; i < paramSetSize; i++)
-                addTestMethodOnce(resultMethods, testMethod);
-        } else {
-            addTestMethodOnce(resultMethods, testMethod);
-        }
+            	resultMethods.add(testMethod.frameworkMethod());    		
+    		
+    	}else{
+    		resultMethods.add(testMethod.frameworkMethod());
+    		
+    	}
     }
+    
+    
+//    private void addTestMethodForEachParamSet(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
+//        if (testMethod.isNotIgnored()) {
+//            int paramSetSize = testMethod.parametersSets().length;
+//            for (int i = 0; i < paramSetSize; i++)
+//            	resultMethods.add(testMethod.frameworkMethod());
+////          addTestMethodOnce(resultMethods, testMethod);
+//        } else {
+////            addTestMethodOnce(resultMethods, testMethod);
+//        	resultMethods.add(testMethod.frameworkMethod());
+//        }
+//    }
 
-    private void addTestMethodOnce(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
-        resultMethods.add(testMethod.frameworkMethod());
-    }
+//    private void addTestMethodOnce(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
+//        resultMethods.add(testMethod.frameworkMethod());
+//    }
 
     private void cacheMethodRunner(TestMethod testMethod) {
         if (!parameterisedMethods.containsKey(testMethod))
