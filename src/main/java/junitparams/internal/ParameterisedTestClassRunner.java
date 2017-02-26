@@ -33,12 +33,9 @@ public class ParameterisedTestClassRunner {
      */
     public ParameterisedTestClassRunner(TestClass testClass) {
         computeTestMethods(testClass);
-//        fillTestMethodsMap();
-//        computeFrameworkMethods();
     }
 
     private void computeTestMethods(TestClass testClass) {
-//        testMethodsList = TestMethod.listFrom(testClass.getAnnotatedMethods(Test.class), testClass);
     	List<FrameworkMethod> annotatedMethods = testClass.getAnnotatedMethods(Test.class);  
     	testMethodsList = new ArrayList<TestMethod>();
     	computeMethods = new ArrayList<FrameworkMethod>();
@@ -50,20 +47,8 @@ public class ParameterisedTestClassRunner {
                 	cacheMethodRunner(testMethod);
                 	addTestMethodForEachParamSet(computeMethods, testMethod);
                 	resultMethods.add(testMethod.frameworkMethod());
-//                    if (testMethod.isParameterised())
-//                        addTestMethodForEachParamSet(resultMethods, testMethod);
-//                    else
-//                    	resultMethods.add(testMethod.frameworkMethod());                	
-                }
-                
-                
-                	
+                }         	
     }
-
-//    private void fillTestMethodsMap() {
-//        for (TestMethod testMethod : testMethodsList)
-//            testMethods.put(testMethod.frameworkMethod(), testMethod);
-//    }
 
     /**
      * Returns a list of <code>FrameworkMethod</code>s. Handles both
@@ -73,15 +58,6 @@ public class ParameterisedTestClassRunner {
      * @return a list of FrameworkMethod objects
      */
     public List<FrameworkMethod> computeFrameworkMethods() {
-//        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
-//
-//        for (TestMethod testMethod : testMethodsList) {
-//            if (testMethod.isParameterised())
-//                addTestMethodForEachParamSet(resultMethods, testMethod);
-//            else
-//                addTestMethodOnce(resultMethods, testMethod);
-//        }
-
         return computeMethods;
     }
 
@@ -91,14 +67,6 @@ public class ParameterisedTestClassRunner {
      * For JUnit to build names for IDE.
      */
     public List<FrameworkMethod> returnListOfMethods() {
-//        List<FrameworkMethod> resultMethods = new ArrayList<FrameworkMethod>();
-//
-//        for (TestMethod testMethod : testMethodsList) {
-//            addTestMethodOnce(resultMethods, testMethod);
-//            cacheMethodRunner(testMethod);
-//            testMethod.warnIfNoParamsGiven();
-//        }
-
         return resultMethods;
     }
 
@@ -114,24 +82,7 @@ public class ParameterisedTestClassRunner {
     	}
     }
     
-    
-//    private void addTestMethodForEachParamSet(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
-//        if (testMethod.isNotIgnored()) {
-//            int paramSetSize = testMethod.parametersSets().length;
-//            for (int i = 0; i < paramSetSize; i++)
-//            	resultMethods.add(testMethod.frameworkMethod());
-////          addTestMethodOnce(resultMethods, testMethod);
-//        } else {
-////            addTestMethodOnce(resultMethods, testMethod);
-//        	resultMethods.add(testMethod.frameworkMethod());
-//        }
-//    }
-
-//    private void addTestMethodOnce(List<FrameworkMethod> resultMethods, TestMethod testMethod) {
-//        resultMethods.add(testMethod.frameworkMethod());
-//    }
-
-    private void cacheMethodRunner(TestMethod testMethod) {
+     private void cacheMethodRunner(TestMethod testMethod) {
         if (!parameterisedMethods.containsKey(testMethod))
             parameterisedMethods.put(testMethod, new ParameterisedTestMethodRunner(testMethod));
     }

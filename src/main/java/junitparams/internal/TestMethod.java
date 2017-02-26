@@ -2,9 +2,7 @@ package junitparams.internal;
 
 import static java.lang.String.format;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.runner.Description;
@@ -12,7 +10,6 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.TestClass;
 
 import junitparams.Parameters;
-//import junitparams.internal.parameters.ParametersReader;
 
 /**
  * A wrapper for a test method
@@ -33,15 +30,6 @@ public class TestMethod {
     public String name() {
         return frameworkMethod.getName();
     }
-
-//    static List<TestMethod> listFrom(List<FrameworkMethod> annotatedMethods, TestClass testClass) {
-//        List<TestMethod> methods = new ArrayList<TestMethod>();
-//
-//        for (FrameworkMethod frameworkMethod : annotatedMethods)
-//            methods.add(new TestMethod(frameworkMethod, testClass));
-//
-//        return methods;
-//    }
 
     @Override
     public int hashCode() {
@@ -81,12 +69,7 @@ public class TestMethod {
        return isParameterised() && parametersSets().length == 0;
     }
 
-//    public boolean isNotIgnored() {
-//        return !isIgnored();
-//    }
-
     Description describe() {
-//        if (isNotIgnored() && !describeFlat()) {
     	if (!isIgnored() && !describeFlat()) {
             Description parametrised = Description.createSuiteDescription(name());
             Object[] params = parametersSets();
@@ -114,11 +97,6 @@ public class TestMethod {
         }
         return cachedParameters;
     }
-
-//    void warnIfNoParamsGiven() {
-//        if (isNotIgnored() && isParameterised() && parametersSets().length == 0)
-//            System.err.println("Method " + name() + " gets empty list of parameters, so it's being ignored!");
-//    }
 
     public FrameworkMethod frameworkMethod() {
         return frameworkMethod;
